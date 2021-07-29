@@ -1,0 +1,224 @@
+- id: '1619286949454'
+  alias: Porch Light On
+  description: 'On at sunset '
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.porch_light
+  mode: single
+- id: '1619287062363'
+  alias: 'Porch Light Off '
+  description: Off at 10pm
+  trigger:
+  - platform: time
+    at: 01:00
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.porch_light
+  mode: single
+- id: '1619853546057'
+  alias: Turn Off Fan
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00
+  - platform: numeric_state
+    below: '60.0'
+    entity_id: sensor.bedroom_temperature
+  condition: []
+  action:
+  - service: fan.turn_off
+    target:
+      entity_id: fan.bedroom_tower_fan
+  mode: single
+- id: '1620363654429'
+  alias: Group Entry Lights On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.entry_hallway_lights
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: switch.entryway_light
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      area_id: entryway
+  - service: switch.turn_on
+    target:
+      entity_id: switch.kitchen_landing_light
+  mode: single
+- id: '1620363722406'
+  alias: Group Entry Lights Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.entry_hallway_lights
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id: switch.entryway_light
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      area_id: entryway
+  - service: switch.turn_off
+    target:
+      entity_id: switch.kitchen_landing_light
+  mode: single
+- id: '1620413283797'
+  alias: Group Bedroom Stair/Landing Lights On
+  description: Group 3F lights together
+  trigger:
+  - platform: state
+    entity_id: switch.bedroom_stair_light
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: switch.upstairs_hall_light
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.bedroom_stair_light
+  - service: switch.turn_on
+    target:
+      entity_id: switch.upstairs_hall_light
+  mode: single
+- id: '1620413361238'
+  alias: Group Bedroom Stair/Landing Lights Off
+  description: Group 3F lights together
+  trigger:
+  - platform: state
+    entity_id: switch.bedroom_stair_light
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id: switch.upstairs_hall_light
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.bedroom_stair_light
+  - service: switch.turn_off
+    target:
+      entity_id: switch.upstairs_hall_light
+  mode: single
+- id: '1620415247100'
+  alias: Away on geofence
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.everyone
+    from: home
+    to: not_home
+  condition: []
+  action:
+  - service: script.away
+  mode: single
+- id: '1620593707549'
+  alias: Morning Lights
+  description: Turn on the lights downstairs in the morning
+  trigger:
+  - platform: state
+    entity_id: switch.master_bathroom_lights
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    after: '8:45'
+    before: '9:30'
+  action:
+  - service: light.turn_on
+    target:
+      area_id: kitchen
+      entity_id: light.rope_lights
+    data:
+      brightness: 255
+  - service: switch.turn_on
+    target:
+      area_id:
+      - kitchen
+      - living_room
+      - upstairs_hall
+  mode: single
+- id: '1621034253071'
+  alias: RAID Notify
+  description: Notify when RAID volume rebuild is complete
+  trigger:
+  - platform: state
+    entity_id: sensor.tanngrisnir_volume_1_status
+    from: repairing
+    to: normal
+  condition: []
+  action:
+  - service: notify.pushbullet_notifier
+    data:
+      message: RAID Rebuild is complete!
+      title: Rebuild Done
+  - service: notify.mobile_app_goatphone
+    data:
+      message: RAID Rebuild is complete!
+      title: Rebuild Done
+  mode: single
+- id: '1621360284501'
+  alias: Turn on AC
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states.sensor.bedroom_temperature >= states.input_number.ac_high_point
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.south_bedroom_window
+    state: closed
+  action:
+  - service: climate.turn_on
+    target:
+      entity_id: climate.air_conditioner
+  - service: climate.set_temperature
+    data:
+      temperature: 62
+      hvac_mode: cool
+    target:
+      entity_id: climate.air_conditioner
+  mode: single
+- id: '1621361374490'
+  alias: Turn off AC
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states.sensor.bedroom_temperature <= states.input_number.ac_low_point
+      }}'
+  - platform: state
+    entity_id: binary_sensor.south_bedroom_window
+    from: closed
+    to: open
+  action:
+  - service: climate.turn_off
+    target:
+      entity_id: climate.air_conditioner
+  mode: single

@@ -1,0 +1,10 @@
+secrets.yaml
+*.db
+*.sqlite
+*.log
+OZW_Log.txt
+tts/*
+.ssh/*
+.storage/*
+#We're tracking esphome projects in a different repo
+esphome/*

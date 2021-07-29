@@ -1,0 +1,49 @@
+- id: '1618898863720'
+  name: Movie Time
+  entities:
+    media_player.chromecast:
+      volume_level: 0.4000000059604645
+      is_volume_muted: false
+      media_position_updated_at: '2021-06-09T01:51:48.962818+00:00'
+      app_id: Netflix
+      app_name: Netflix
+      entity_picture_local:
+      friendly_name: BleatCast
+      supported_features: 152449
+      state: unknown
+    light.kitchen_island_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 77
+      friendly_name: Kitchen Island Lights
+      supported_features: 32
+      state: 'on'
+    switch.kitchen_landing_light:
+      friendly_name: Kitchen Landing Light
+      icon: hass:lightbulb
+      state: 'off'
+    switch.kitchen_light:
+      friendly_name: Kitchen Light
+      icon: hass:lightbulb
+      state: 'off'
+    light.living_room_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_table:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 3
+      friendly_name: Dining Table
+      icon: mdi:vanity-light
+      supported_features: 32
+      state: 'on'
+    switch.entry_hallway_lights:
+      friendly_name: Entry Hallway Lights
+      icon: hass:stairs
+      state: 'off'
+  icon: mdi:popcorn

@@ -1,0 +1,30 @@
+kitchen:
+    name: Kitchen Lights
+    entities:
+        - switch.kitchen_light
+        - light.kitchen_island_lights
+living_room:
+    name: Living Room
+    entities:
+        - light.living_room_lights
+        - light.tv_strip_white
+        - light.dining_table
+entryway:
+    name: Entryway
+    all: true
+    entities:
+        - switch.entryway_light
+        - switch.entry_hallway_lights
+        - switch.kitchen_landing_light
+upstairs:
+    name: Upstairs
+    entities:
+        - switch.upstairs_hall_light
+        - switch.bedroom_stair_light
+        
+everyone:
+    name: Everyone
+    entities:
+        - person.alpha
+        - person.growlph
+        - person.omega

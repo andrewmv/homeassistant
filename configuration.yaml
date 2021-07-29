@@ -1,0 +1,225 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Frontend HTTP and HTTPS settings
+# Customized to operate behind a reverse proxy
+http:
+  ssl_certificate: /ssl/keke.local.crt
+  ssl_key: /ssl/keke.local.key
+  cors_allowed_origins:
+    - https://keke:8123
+    - https://habitat.ibex.social
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.1
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+# Use external DB for history
+recorder:
+  db_url: !secret recorder_db_url
+  purge_keep_days: 30
+
+# Docs: https://www.home-assistant.io/integrations/nest/
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  # "Project ID" in the Device Access Console
+  project_id: !secret nest_project_id
+  # Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
+  subscriber_id: !secret nest_subscriber_id
+
+octoprint:
+    host: 'jetson.local'
+    api_key: !secret octoprint_api_key
+    bed: true
+    number_of_tools: 1
+    
+climate:
+  - platform: sensibo
+    api_key: !secret sensibo_api_key
+    
+rest_command:
+  octoprint_preheat_bed_pla:
+    url: "https://octoprint.ibex.social/api/printer/bed"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "target", "target": 65 }'
+  octoprint_preheat_bed_abs:
+    url: "https://octoprint.ibex.social/api/printer/bed"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "target", "target": 85 }'
+  octoprint_cancel_preheat:
+    url: "https://octoprint.ibex.social/api/printer/bed"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "target", "target": 0 }'
+  octoprint_connect:
+    url: "https://octoprint.ibex.social/api/connection"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "connect", "printerProfile": "_default" }'
+  octoprint_start:
+    url: "https://octoprint.ibex.social/api/job"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "start" }'
+  octoprint_heat_hotend:
+    url: "https://octoprint.ibex.social/api/printer/tool"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "target", "targets": {"tool0": 210} }'
+  octoprint_cancel_hotend:
+    url: "https://octoprint.ibex.social/api/printer/tool"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "target", "targets": {"tool0": 0} }'
+
+    
+# Create °C versions of our printer senors.
+# We're falsing setting them as °F values so HA doesn't try to auto-conver them
+sensor:
+  - platform: pushbullet
+    api_key: !secret pushbullet_api_key
+  - platform: template
+    sensors:
+      octoprint_actual_tool0_temp_c:
+        unit_of_measurement: '°F'
+        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_tool0_temp") | float ) -32) *5/9) }}'
+      octoprint_actual_bed_temp_c:
+        unit_of_measurement: '°F'
+        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_bed_temp") | float ) -32) *5/9) }}'
+      octoprint_target_tool0_temp_c:
+        unit_of_measurement: '°F'
+        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_tool0_temp") | float ) -32) *5/9) }}'
+      octoprint_target_bed_temp_c:
+        unit_of_measurement: '°F'
+        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_bed_temp") | float ) -32) *5/9) }}'
+      octoprint_time_elapsed_pretty:
+        value_template: >-
+          {%- set uptime  = states.sensor.octoprint_time_elapsed.state | round -%}
+          {%- set sep     = ', ' -%}
+          {%- set TIME_MAP = {
+              'week': (uptime / 604800) % 10080,
+               'day': (uptime / 86400) % 7,
+              'hour': (uptime / 3600) % 24,
+            'minute': (uptime / 60) % 60
+          }
+          -%}
+
+          {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
+            {%- if not loop.first -%}
+              {{ sep }}
+            {%- endif -%}
+              
+            {{ (duration | string).split('.')[0] }} {{ unit }}
+
+            {%- if duration >= 2 -%}
+              s
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if uptime < 1 -%}
+            just now
+          {%- endif -%}
+      octoprint_time_remaining_pretty:
+        value_template: >-
+          {%- set uptime  = states.sensor.octoprint_time_remaining.state | round -%}
+          {%- set sep     = ', ' -%}
+          {%- set TIME_MAP = {
+              'week': (uptime / 604800) % 10080,
+               'day': (uptime / 86400) % 7,
+              'hour': (uptime / 3600) % 24,
+            'minute': (uptime / 60) % 60
+          }
+          -%}
+
+          {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
+            {%- if not loop.first -%}
+              {{ sep }}
+            {%- endif -%}
+              
+            {{ (duration | string).split('.')[0] }} {{ unit }}
+
+            {%- if duration >= 2 -%}
+              s
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if uptime < 1 -%}
+            just now
+          {%- endif -%}
+          
+
+    
+camera:
+  - platform: mjpeg
+    name: OctoPrint
+    still_image_url: http://jetson.local/webcam/?action=snapshot
+    mjpeg_url: http://jetson.local/webcam/?action=stream
+    
+# Docs: https://www.home-assistant.io/integrations/alexa.smart_home/
+alexa:
+  smart_home:
+    filter:
+      exclude_entities:
+        - automation.turn_off_fan
+        - automation.raid_notify
+        - automation.porch_light_on
+        - automation.porch_light_off
+        - automation.morning_lights
+        - automation.entry_lights_on
+        - automation.entry_lights_off
+        - automation.bedroom_stair_landing_lights_on
+        - automation.bedroom_stair_landing_lights_off
+        - automation.new_automation
+        - script.tv_lights_white
+        - script.tv_lights_off
+        - script.second_floor_lights_off
+        - climate.bedroom
+
+# Example configuration.yaml entry
+light:
+  - platform: decora_wifi
+    username: !secret decora_wifi_username
+    password: !secret decora_wifi_password
+
+notify:
+  - name: pushbullet_notifier
+    platform: pushbullet
+    api_key: !secret pushbullet_api_key
+
+media_player:
+  - platform: onkyo
+    host: 192.168.1.36
+    name: receiver
+    receiver_max_volume: 100
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+homeassistant:
+    customize: !include customize.yaml
+

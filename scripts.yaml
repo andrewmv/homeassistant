@@ -1,0 +1,263 @@
+hallway_goodnight:
+  alias: Hallway Goodnight
+  sequence:
+  - service: light.turn_off
+    target:
+      area_id:
+      - living_room
+      - kitchen
+      - entryway
+  - service: switch.turn_off
+    target:
+      area_id:
+      - entryway
+      - kitchen
+      - living_room
+  - service: remote.turn_off
+    data: {}
+    target:
+      entity_id:
+      - remote.harmony_hub_2
+  - service: fan.turn_off
+    target:
+      area_id: living_room
+  mode: single
+  icon: mdi:moon-waning-crescent
+tv_lights_off:
+  alias: TV Lights Off
+  sequence:
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.tv_strip_color
+      - light.tv_strip_white
+  mode: single
+  icon: mdi:lightbulb
+tv_lights_white:
+  alias: TV Lights White
+  sequence:
+  - service: light.turn_on
+    target:
+      entity_id: light.tv_strip_white
+    data:
+      brightness: 255
+  - service: light.turn_off
+    target:
+      entity_id: light.tv_strip_color
+  mode: single
+  icon: mdi:lightbulb
+leaving_home:
+  alias: Going Away
+  sequence:
+  - service: switch.turn_off
+    target:
+      area_id:
+      - kitchen
+      - living_room
+  - service: switch.turn_on
+    target:
+      area_id: entryway
+  - service: remote.turn_off
+    data:
+      entity_id: remote.harmony_hub
+  - service: light.turn_off
+    target:
+      area_id:
+      - kitchen
+      - living_room
+  mode: single
+  icon: mdi:home-export-outline
+home_again:
+  alias: Home Again
+  sequence:
+  - service: switch.turn_on
+    target:
+      area_id: kitchen
+      entity_id: switch.living_room_lights
+  - service: switch.turn_off
+    target:
+      area_id: entryway
+  - service: light.turn_on
+    target:
+      area_id: kitchen
+    data:
+      brightness: 255
+  mode: single
+  icon: mdi:home-import-outline
+second_floor_lights_off:
+  alias: Second Floor Lights Off
+  sequence:
+  - service: switch.turn_off
+    target:
+      area_id:
+      - living_room
+      - kitchen
+      - entryway
+  - service: light.turn_off
+    target:
+      area_id:
+      - kitchen
+      - living_room
+  mode: single
+  icon: hass:lightbulb
+fan_start_delay:
+  alias: Delay Fan Start
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: fan.turn_on
+    data:
+      percentage: 66
+    target:
+      entity_id: fan.bedroom_tower_fan
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 6
+      milliseconds: 0
+  - service: fan.oscillate
+    data:
+      oscillating: true
+    target:
+      entity_id: fan.bedroom_tower_fan
+  mode: restart
+  icon: mdi:fan
+printer_pre_heat_pla:
+  alias: Printer pre-heat PLA
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_connect
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: rest_command.octoprint_preheat_bed_pla
+  mode: single
+  icon: mdi:printer-3d
+'1620409416896':
+  alias: Printer pre-heat ABS
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_connect
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: rest_command.octoprint_preheat_bed_abs
+  mode: single
+  icon: mdi:printer-3d
+'1620409556850':
+  alias: Printer cancel pre-heat
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_cancel_preheat
+  mode: single
+  icon: mdi:printer-3d
+'1620409693203':
+  alias: Printer start
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_connect
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: rest_command.octoprint_start
+  mode: single
+  icon: mdi:printer-3d
+away:
+  alias: Away
+  sequence:
+  - service: switch.turn_off
+    target:
+      area_id:
+      - entryway
+      - kitchen
+      - living_room
+      - home_theater
+      - garage
+      - upstairs_hall
+  - service: light.turn_off
+    target:
+      area_id:
+      - kitchen
+      - living_room
+  mode: single
+  icon: mdi:home
+printer_change_fiiliment:
+  alias: Printer Change Filiment
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_connect
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: rest_command.octoprint_heat_hotend
+  mode: single
+  icon: mdi:printer-3d
+'1621226637415':
+  alias: Printer Cancel Hotend
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.octoprint_current_state
+      state: Printing
+  - service: rest_command.octoprint_connect
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: rest_command.octoprint_cancel_hotend
+  mode: single
+  icon: mdi:printer-3d
+ac_toggle:
+  alias: AC Toggle
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: climate.air_conditioner
+        state: 'off'
+      sequence:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.air_conditioner
+        data:
+          temperature: 62
+          hvac_mode: cool
+    default:
+    - service: climate.turn_off
+      target:
+        entity_id: climate.air_conditioner
+  mode: single
+  icon: mdi:snowflake
