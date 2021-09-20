@@ -90,6 +90,70 @@ rest_command:
     headers:
         X-Api-Key: !secret octoprint_api_key
     payload: '{"command": "target", "targets": {"tool0": 0} }'
+  octoprint_turnon_psu:
+    url: "https://octoprint.ibex.social/api/plugin/psucontrol"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command":"turnPSUOn"}'
+  octoprint_turnoff_psu:
+    url: "https://octoprint.ibex.social/api/plugin/psucontrol"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command":"turnPSUOff"}'
+  octoprint_jog_xp:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "x": 10 }'
+  octoprint_jog_xn:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "x": -10 }'
+  octoprint_jog_yp:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "y": 10 }'
+  octoprint_jog_yn:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "y": -10 }'
+  octoprint_jog_zu:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "z": 10 }'
+  octoprint_jog_zd:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "job", "z": -10 }'
+  octoprint_home:
+    url: "https://octoprint.ibex.social/api/printer/printhead"
+    method: post
+    content_type: "application/json"
+    headers:
+        X-Api-Key: !secret octoprint_api_key
+    payload: '{"command": "home", "axes": ["x","y","z"] }'
+
 
     
 # Create °C versions of our printer senors.
@@ -193,6 +257,9 @@ alexa:
         - script.tv_lights_off
         - script.second_floor_lights_off
         - climate.bedroom
+      exclude_entity_globs:
+        - switch.*display_timer
+        - switch.*restart
 
 # Example configuration.yaml entry
 light:

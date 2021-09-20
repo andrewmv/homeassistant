@@ -47,3 +47,23 @@
       icon: hass:stairs
       state: 'off'
   icon: mdi:popcorn
+- id: '1631063533474'
+  name: Dinner Time
+  entities:
+    light.dining_table:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 129
+      friendly_name: Dining Table
+      icon: mdi:vanity-light
+      supported_features: 32
+      state: 'on'
+    light.living_room_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 59
+      friendly_name: Living Room Lights
+      supported_features: 32
+      state: 'on'

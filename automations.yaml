@@ -160,10 +160,10 @@
       brightness: 255
   - service: switch.turn_on
     target:
-      area_id:
-      - kitchen
-      - living_room
-      - upstairs_hall
+      entity_id:
+      - switch.kitchen_light
+      - switch.upstairs_hall_light
+      - switch.bedroom_stair_light
   mode: single
 - id: '1621034253071'
   alias: RAID Notify
@@ -221,4 +221,94 @@
   - service: climate.turn_off
     target:
       entity_id: climate.air_conditioner
+  mode: single
+- id: '1630952450601'
+  alias: 'Alpha''s Den: Sync Thermostat Display Timeout to DnD On'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.alpha_s_phone_do_not_disturb_sensor
+    from: 'off'
+    to: priority_only
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0f2ffc993610268f035dc9de2f19eb69
+    entity_id: switch.alpha_den_thermostat_display_timer
+    domain: switch
+  mode: single
+- id: '1630952497601'
+  alias: 'Alpha''s Den: Sync Thermostat Display Timeout to DnD Off'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.alpha_s_phone_do_not_disturb_sensor
+    to: 'off'
+    from: priority_only
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 0f2ffc993610268f035dc9de2f19eb69
+    entity_id: switch.alpha_den_thermostat_display_timer
+    domain: switch
+  mode: single
+- id: '1631752905743'
+  alias: Goat Summit Thermostat Dimmer On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.rope_lights
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.goat_summit_thermostat_display_timer
+  mode: single
+- id: '1631752934157'
+  alias: Goat Summit Thermostat Dimmer Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.rope_lights
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.goat_summit_thermostat_display_timer
+  mode: single
+- id: '1632085502491'
+  alias: Disable Heat on Window Open
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.south_bedroom_window
+    from: closed
+    to: open
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    target:
+      entity_id: climate.goat_summit_thermostat
+    data:
+      hvac_mode: 'off'
+  mode: single
+- id: '1632085538397'
+  alias: Enable Heat on Window Close
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.south_bedroom_window
+    from: open
+    to: closed
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    target:
+      entity_id: climate.goat_summit_thermostat
+    data:
+      hvac_mode: heat
   mode: single
