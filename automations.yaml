@@ -165,25 +165,6 @@
       - switch.upstairs_hall_light
       - switch.bedroom_stair_light
   mode: single
-- id: '1621034253071'
-  alias: RAID Notify
-  description: Notify when RAID volume rebuild is complete
-  trigger:
-  - platform: state
-    entity_id: sensor.tanngrisnir_volume_1_status
-    from: repairing
-    to: normal
-  condition: []
-  action:
-  - service: notify.pushbullet_notifier
-    data:
-      message: RAID Rebuild is complete!
-      title: Rebuild Done
-  - service: notify.mobile_app_goatphone
-    data:
-      message: RAID Rebuild is complete!
-      title: Rebuild Done
-  mode: single
 - id: '1621360284501'
   alias: Turn on AC
   description: ''
@@ -253,7 +234,7 @@
     domain: switch
   mode: single
 - id: '1631752905743'
-  alias: Goat Summit Thermostat Dimmer On
+  alias: Goat Summit Thermostat Display On With Lights
   description: ''
   trigger:
   - platform: state
@@ -267,7 +248,7 @@
       entity_id: switch.goat_summit_thermostat_display_timer
   mode: single
 - id: '1631752934157'
-  alias: Goat Summit Thermostat Dimmer Off
+  alias: Goat Summit Thermostat Display Off With Lights
   description: ''
   trigger:
   - platform: state
@@ -286,8 +267,8 @@
   trigger:
   - platform: state
     entity_id: binary_sensor.south_bedroom_window
-    from: closed
-    to: open
+    from: 'off'
+    to: 'on'
   condition: []
   action:
   - service: climate.set_hvac_mode
@@ -302,8 +283,8 @@
   trigger:
   - platform: state
     entity_id: binary_sensor.south_bedroom_window
-    from: open
-    to: closed
+    from: 'on'
+    to: 'off'
   condition: []
   action:
   - service: climate.set_hvac_mode
@@ -311,4 +292,168 @@
       entity_id: climate.goat_summit_thermostat
     data:
       hvac_mode: heat
+  mode: single
+- id: '1634242989864'
+  alias: Morning Heaters
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition: []
+  action:
+  - service: script.set_heaters_for_morning
+  mode: single
+- id: '1634410533194'
+  alias: Wolf Dungeon Weekend Heat
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.wolf_dungeon_thermostat
+    data:
+      temperature: 71
+      hvac_mode: heat
+  mode: single
+- id: '1634410631363'
+  alias: Wolf Dungeon Weekend Heat Off
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.wolf_dungeon_thermostat
+    data:
+      temperature: 65
+      hvac_mode: heat
+  mode: single
+- id: '1638166095726'
+  alias: Home Theater Volume Knob Update
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: number.home_theater_volume_delta
+  condition:
+  - condition: template
+    value_template: '{{ trigger.to_state.state | float != 0.0 }}'
+  action:
+  - service: number.set_value
+    data:
+      value: '0'
+    target:
+      entity_id: number.home_theater_volume_delta
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.receiver
+      volume_level: "{% set target = state_attr('media_player.receiver', 'volume_level')\
+        \ + (trigger.to_state.state | float / 100) %} {% if target | float <= 0.0\
+        \ %}\n  {{ 0.0 | float }}\n{% elif target | float >= 1.0 %}\n  {{ 1.0 | float\
+        \ }}\n{% else %}\n  {{ target | float }}\n{% endif %}\n"
+  mode: queued
+  max: 10
+- id: '1638386608303'
+  alias: Turn down Alpha's heat at 3 pm
+  description: ''
+  trigger:
+  - platform: time
+    at: '15:00:00'
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      device_id: 20f85301d765862ffd80571922d4f2b4
+    data:
+      temperature: 66
+  mode: single
+- id: '1638826760916'
+  alias: Battery Management - Work Phone Low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.oracle_phone_battery_level
+    below: '70'
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.work_phone_plug_switch
+  mode: single
+- id: '1638826856904'
+  alias: Battery Management - Work Phone High
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.oracle_phone_battery_level
+    above: '80'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.work_phone_plug_switch
+  mode: single
+- id: '1638829837833'
+  alias: Battery Management - Goat Kiosk High
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.goat_summit_kiosk_battery_level
+    above: '80'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.goat_summit_tablet_plug_switch
+  mode: single
+- id: '1638829893467'
+  alias: Battery Management - Goat Kiosk Low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.goat_summit_kiosk_battery_level
+    below: '70'
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.goat_summit_tablet_plug_switch
+  mode: single
+- id: '1640213597607'
+  alias: TV On Dim Thermostat
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.living_room_tv
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.living_room_thermostat_display_timer
+  mode: single
+- id: '1640213646533'
+  alias: TV Off Undim Thermostat
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.living_room_tv
+    from: 'on'
+    to: 'off'
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.living_room_thermostat_display_timer
   mode: single

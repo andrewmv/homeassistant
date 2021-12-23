@@ -1,70 +1,57 @@
 hallway_goodnight:
-  alias: Hallway Goodnight
   sequence:
+  - service: script.tv_off
   - service: light.turn_off
     target:
       area_id:
       - living_room
       - kitchen
       - entryway
+      entity_id:
+      - light.dining_table_lights
+      - light.downstairs_lightstrip
   - service: switch.turn_off
     target:
       area_id:
       - entryway
       - kitchen
       - living_room
-  - service: remote.turn_off
-    data: {}
-    target:
-      entity_id:
-      - remote.harmony_hub_2
   - service: fan.turn_off
     target:
       area_id: living_room
+  - service: script.set_heaters_for_bedtime
   mode: single
   icon: mdi:moon-waning-crescent
-tv_lights_off:
-  alias: TV Lights Off
-  sequence:
-  - service: light.turn_off
-    target:
-      entity_id:
-      - light.tv_strip_color
-      - light.tv_strip_white
-  mode: single
-  icon: mdi:lightbulb
-tv_lights_white:
-  alias: TV Lights White
-  sequence:
-  - service: light.turn_on
-    target:
-      entity_id: light.tv_strip_white
-    data:
-      brightness: 255
-  - service: light.turn_off
-    target:
-      entity_id: light.tv_strip_color
-  mode: single
-  icon: mdi:lightbulb
+  alias: Go The Fuck To Sleep
 leaving_home:
   alias: Going Away
   sequence:
-  - service: switch.turn_off
-    target:
-      area_id:
-      - kitchen
-      - living_room
   - service: switch.turn_on
     target:
       area_id: entryway
-  - service: remote.turn_off
-    data:
-      entity_id: remote.harmony_hub
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.kitchen_light
+      - switch.bedroom_stair_light
+      - switch.upstairs_hall_light
+      - switch.omega_dungeon_light
+      - switch.alpha_bedroom_light
+      - switch.downstairs_bathroom_lights
+      - switch.master_bathroom_lights
+      - switch.master_closet_light
+      - switch.master_toilet_light
   - service: light.turn_off
     target:
-      area_id:
-      - kitchen
-      - living_room
+      entity_id:
+      - light.dining_table_lights
+      - light.living_room_lights
+      - light.kitchen_island_lights
+      - light.tv_strip_color
+      - light.tv_strip_white
+      - light.rope_lights
+      - light.alpha_bathroom
+  - service: script.tv_off
   mode: single
   icon: mdi:home-export-outline
 home_again:
@@ -98,6 +85,7 @@ second_floor_lights_off:
       area_id:
       - kitchen
       - living_room
+      entity_id: light.dining_table_lights
   mode: single
   icon: hass:lightbulb
 fan_start_delay:
@@ -192,18 +180,37 @@ away:
   sequence:
   - service: switch.turn_off
     target:
-      area_id:
-      - entryway
-      - kitchen
-      - living_room
-      - home_theater
-      - garage
-      - upstairs_hall
+      entity_id:
+      - switch.garage_light
+      - switch.upstairs_hall_light
+      - switch.bedroom_stair_light
+      - switch.kitchen_light
+      - switch.kitchen_landing_light
+      - switch.entry_hallway_lights
+      - switch.entryway_light
+      - switch.alpha_bedroom_light
+      - switch.omega_dungeon_light
   - service: light.turn_off
     target:
-      area_id:
-      - kitchen
-      - living_room
+      entity_id:
+      - light.dining_table_lights
+      - light.kitchen_island_lights
+      - light.tv_strip_color
+      - light.tv_strip_color
+      - light.rope_lights
+      - light.now_playing_light
+      - light.living_room_lights
+      - light.alpha_bathroom
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.goat_summit_thermostat
+      - climate.wolf_dungeon_thermostat
+      - climate.alpha_den_thermostat
+      - climate.living_room_thermostat
+    data:
+      temperature: 65
+  - service: script.tv_off
   mode: single
   icon: mdi:home
 printer_change_fiiliment:
@@ -261,3 +268,496 @@ ac_toggle:
         entity_id: climate.air_conditioner
   mode: single
   icon: mdi:snowflake
+set_heaters_for_bedtime:
+  alias: Set Heaters for Bedtime
+  sequence:
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.living_room_thermostat
+      - climate.wolf_dungeon_thermostat
+    data:
+      temperature: 60
+      hvac_mode: heat
+  mode: single
+  icon: mdi:fire
+set_heaters_for_morning:
+  alias: Set Heaters for Morning
+  sequence:
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.living_room_thermostat
+      - climate.wolf_dungeon_thermostat
+    data:
+      temperature: 68
+      hvac_mode: heat
+  mode: single
+  icon: mdi:fire
+work_is_over:
+  alias: Work is Over
+  sequence:
+  - service: light.turn_off
+    target:
+      entity_id: light.rope_lights
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.master_bathroom_lights
+      - switch.master_closet_light
+      - switch.master_toilet_light
+  - service: homeassistant.turn_on
+    target:
+      entity_id:
+      - group.living_room
+      - group.kitchen
+      - group.upstairs
+      - light.dining_table_lights
+  mode: single
+  icon: mdi:glass-cocktail
+'1637482746551':
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id: media_player.living_room_tv
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: HDMI 1
+  mode: single
+  alias: ChromeCast
+  icon: mdi:cast
+roku:
+  alias: Roku
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.roku_ultra
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Video 2
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Roku OTT
+  mode: single
+  icon: mdi:set-top-box
+rifftrax:
+  alias: RiffTrax
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+      - media_player.roku_ultra
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Video 2
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Roku OTT
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.roku_ultra
+    data:
+      source: RiffTrax
+  mode: single
+  icon: mdi:television-classic
+plex:
+  alias: Plex
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Plex
+  mode: single
+  icon: mdi:television
+netflix:
+  alias: Netflix
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Netflix
+  mode: single
+  icon: mdi:netflix
+prime_video:
+  alias: Prime Video
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Amazon Prime Video
+  mode: single
+  icon: mdi:television
+disney_plus:
+  alias: Disney Plus
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Disney+
+  mode: single
+  icon: mdi:television
+hulu:
+  alias: Hulu
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Hulu
+  mode: single
+  icon: mdi:hulu
+hbo_max:
+  alias: HBO Max
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: HBO Max
+  mode: single
+  icon: mdi:television
+paramount_plus:
+  alias: Paramount Plus
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Paramount+
+  mode: single
+  icon: mdi:television
+xbox:
+  alias: XBox
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.receiver
+      - media_player.living_room_tv
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: XBOX Game Console
+  mode: single
+  icon: mdi:microsoft-xbox
+xbox_muted:
+  alias: XBox Without Sound
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id: media_player.living_room_tv
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: XBOX Game Console
+  - service: media_player.volume_set
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      volume_level: 0
+  - service: media_player.turn_off
+    target:
+      entity_id: media_player.receiver
+  mode: single
+  icon: mdi:microsoft-xbox
+nintendo_switch:
+  alias: Nintendo Switch
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.receiver
+      - media_player.living_room_tv
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Video 3
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Roku OTT
+  mode: single
+  icon: mdi:nintendo-switch
+ps4:
+  alias: PS4
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+      - media_player.playstation_4
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Video 6
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.living_room_tv
+    data:
+      source: Roku OTT
+  mode: single
+  icon: mdi:sony-playstation
+tv:
+  alias: TV
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room_tv
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: TV
+  mode: single
+  icon: mdi:television
+tv_off:
+  sequence:
+  - service: media_player.turn_off
+    target:
+      entity_id:
+      - media_player.receiver
+      - media_player.living_room_tv
+      - media_player.playstation_4
+  mode: single
+  alias: TV Off
+  icon: mdi:television-off
+home_theater_play_pause:
+  alias: Home Theater Play Pause
+  sequence:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: media_player.living_room_tv
+      state: 'on'
+    - condition: state
+      entity_id: media_player.receiver
+      state: TV
+      attribute: source
+  - service: media_player.media_play_pause
+    target:
+      entity_id: media_player.living_room_tv
+  mode: single
+  icon: mdi:play-pause
+turntable:
+  alias: Turntable
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.turn_off
+    target:
+      entity_id:
+      - media_player.living_room_tv
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Phono
+  mode: single
+  icon: mdi:record-player
+tape:
+  alias: Tape Deck
+  sequence:
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.receiver
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: media_player.turn_off
+    target:
+      entity_id:
+      - media_player.living_room_tv
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.receiver
+    data:
+      source: Tape
+  mode: single
+  icon: mdi:cassette

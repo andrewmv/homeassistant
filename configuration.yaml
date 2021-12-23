@@ -154,7 +154,16 @@ rest_command:
         X-Api-Key: !secret octoprint_api_key
     payload: '{"command": "home", "axes": ["x","y","z"] }'
 
+wake_on_lan:
 
+webostv:
+  host: 192.168.1.155
+  name: Living Room TV
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: B0-37-95-B6-32-A7
+      broadcast_address: 192.168.1.255
     
 # Create °C versions of our printer senors.
 # We're falsing setting them as °F values so HA doesn't try to auto-conver them
@@ -229,7 +238,21 @@ sensor:
           {%- if uptime < 1 -%}
             just now
           {%- endif -%}
-          
+  - platform: nut
+    users:
+      - username: nutty
+        password: !secret nutpw
+        instcmds:
+          - all
+        actions: []
+    devices:
+      - name: hometheaterups
+        driver: usbhid-ups
+        port: auto
+        config: 
+          - mode: netserver
+            shutdown_host: 'false'
+
 
     
 camera:
@@ -243,29 +266,116 @@ alexa:
   smart_home:
     filter:
       exclude_entities:
-        - automation.turn_off_fan
-        - automation.raid_notify
-        - automation.porch_light_on
-        - automation.porch_light_off
-        - automation.morning_lights
-        - automation.entry_lights_on
-        - automation.entry_lights_off
-        - automation.bedroom_stair_landing_lights_on
-        - automation.bedroom_stair_landing_lights_off
-        - automation.new_automation
-        - script.tv_lights_white
-        - script.tv_lights_off
+        - script.ac_toggle
+        - script.fan_start_delay
         - script.second_floor_lights_off
+        - script.set_heaters_for_bedtime
+        - script.set_heaters_for_morning
         - climate.bedroom
+        - switch.living_room_xbox_plug
+        - switch.living_room_stereo_plug
+        - switch.home_theater_misc_plug
+        - switch.chromecast_plug
+        - switch.main_wap_plug
+        - switch.living_room_tv_plug
+        - binary_sensor.home_theater_volume_button
+        - number.home_theater_volume_delta
+        - sensor.alpha_den_thermostat_wifi
+        - media_player.everywhere
+        - binary_sensor.garage_door_myq_gateway
+        - binary_sensor.updater
+        - sensor.refridgerator_temperature
       exclude_entity_globs:
         - switch.*display_timer
         - switch.*restart
+        - sensor.tanngrisnir*
+        - binary_sensory.tanngrisnir*
+        - climate.placeholder*
+        - sensor.placeholder*
+        - sensor.alpha_s_phone*
+        - sensor.christophers_iphone*
+        - sensor.goatphone*
+        - sensor.google_pixel*
+        - sensor.goat_summit_kiosk*
+        - sensor.motorola_one_zoom*
+        - sensor.omegaphone*
+        - sensor.oracle_phone*
+        - binary_sensor.alpha_s_phone*
+        - binary_sensor.christophers_iphone*
+        - binary_sensor.goatphone*
+        - binary_sensor.google_pixel*
+        - binary_sensor.goat_summit_kiosk*
+        - binary_sensor.motorola_one_zoom*
+        - binary_sensor.omegaphone*
+        - binary_sensor.oracle_phone*
+        - sensor.octoprint*
+        - binary_sensor.octoprint*
+        - "*.ev_plug*"
+        - "*.goat_desk_plug*"
+        - "*.work_phone_plug*"
+        - "*.goat_summit_tablet_plug*"
+      exclude_domains:
+        - automation
+        - device_tracker
+        - person
 
-# Example configuration.yaml entry
-light:
-  - platform: decora_wifi
-    username: !secret decora_wifi_username
-    password: !secret decora_wifi_password
+homekit:
+  - filter:
+      exclude_entities:
+        - binary_sensor.home_theater_volume_button
+        - number.home_theater_volume_delta
+        - switch.living_room_xbox_plug
+        - switch.living_room_stereo_plug
+        - switch.home_theater_misc_plug
+        - switch.chromecast_plug
+        - switch.main_wap_plug
+        - switch.living_room_tv_plug
+        - script.ac_toggle
+        - script.fan_start_delay
+        - script.second_floor_lights_off
+        - script.set_heaters_for_bedtime
+        - script.set_heaters_for_morning
+        - sensor.alpha_den_thermostat_wifi
+        - media_player.everywhere
+        - binary_sensor.garage_door_myq_gateway
+        - binary_sensor.updater
+        - sensor.refridgerator_temperature
+      exclude_entity_globs:
+        - climate.placeholder*
+        - sensor.placeholder*
+        - switch.*display_timer
+        - switch.*restart
+        - sensor.tanngrisnir*
+        - binary_sensory.tanngrisnir*
+        - climate.placeholder*
+        - sensor.placeholder*
+        - sensor.alpha_s_phone*
+        - sensor.christophers_iphone*
+        - sensor.goatphone*
+        - sensor.google_pixel*
+        - sensor.goat_summit_kiosk*
+        - sensor.motorola_one_zoom*
+        - sensor.omegaphone*
+        - sensor.oracle_phone*
+        - binary_sensor.alpha_s_phone*
+        - binary_sensor.christophers_iphone*
+        - binary_sensor.goatphone*
+        - binary_sensor.google_pixel*
+        - binary_sensor.goat_summit_kiosk*
+        - binary_sensor.motorola_one_zoom*
+        - binary_sensor.omegaphone*
+        - binary_sensor.oracle_phone*
+        - sensor.octoprint*
+        - binary_sensor.octoprint*
+        - "*.ev_plug*"
+        - "*.goat_desk_plug*"
+        - "*.work_phone_plug*"
+        - "*.goat_summit_tablet_plug*"
+        - sensor.dc_rail*
+      exclude_domains:
+        - automation
+        - device_tracker
+        - person
 
 notify:
   - name: pushbullet_notifier
@@ -277,6 +387,10 @@ media_player:
     host: 192.168.1.36
     name: receiver
     receiver_max_volume: 100
+
+# Empty ffmpeg section needed to load integration at startup
+# (This is needed for the EufySecurity integration to work)
+ffmpeg:
 
 # Text to speech
 tts:
