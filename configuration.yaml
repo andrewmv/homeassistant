@@ -39,6 +39,17 @@ octoprint:
 climate:
   - platform: sensibo
     api_key: !secret sensibo_api_key
+  - platform: generic_thermostat
+    name: Master Bathroom Thermostat
+    heater: switch.master_bathroom_heat
+    target_sensor: sensor.master_bathroom_temperature
+    min_temp: 50
+    max_temp: 99
+    ac_mode: false
+    target_temp: 65
+    min_cycle_duration: 
+      seconds: 60
+    initial_hvac_mode: heat
     
 rest_command:
   octoprint_preheat_bed_pla:
@@ -297,6 +308,7 @@ alexa:
         - binary_sensor.garage_door_myq_gateway
         - binary_sensor.updater
         - sensor.refridgerator_temperature
+        - switch.master_bathroom_heat
       exclude_entity_globs:
         - switch.*display_timer
         - switch.*restart
@@ -354,6 +366,7 @@ homekit:
         - binary_sensor.garage_door_myq_gateway
         - binary_sensor.updater
         - sensor.refridgerator_temperature
+        - switch.master_bathroom_heat
       exclude_entity_globs:
         - climate.placeholder*
         - sensor.placeholder*
@@ -409,6 +422,22 @@ ffmpeg:
 # Text to speech
 tts:
   - platform: google_translate
+
+switch:
+  - platform: template
+    switches:
+      master_bathroom_heat:
+        icon_template: "mdi:fire"
+        value_template: "{{ is_state('binary_sensor.master_bathroom_heater_running', 'on') }}"
+        availability_template: "{{ is_state('binary_sensor.master_bathroom_heater_plug_status', 'on') }}"
+        turn_on:
+          service: button.press
+          target:
+            entity_id: button.master_bathroom_heater_toggle
+        turn_off:
+          service: button.press
+          target:
+            entity_id: button.master_bathroom_heater_toggle
 
 group: !include groups.yaml
 automation: !include automations.yaml
