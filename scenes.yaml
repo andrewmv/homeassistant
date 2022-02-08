@@ -133,30 +133,6 @@
       supported_features: 32
       state: 'on'
   icon: mdi:book
-- id: '1633210416495'
-  name: Alpha's lights to fifty percent
-  entities:
-    switch.alpha_bedroom_light:
-      friendly_name: Alpha Bedroom Light
-      icon: hass:lightbulb
-      state: 'off'
-    switch.alpha_s_2nd_light:
-      friendly_name: Alpha's 2nd light
-      icon: mdi:lightbulb
-      state: 'on'
-  icon: hass:lightbulb
-- id: '1633210478165'
-  name: Alpha's lights to 100 percent
-  entities:
-    switch.alpha_bedroom_light:
-      friendly_name: Alpha Bedroom Light
-      icon: hass:lightbulb
-      state: 'on'
-    switch.alpha_s_2nd_light:
-      friendly_name: Alpha's 2nd light
-      icon: mdi:lightbulb
-      state: 'on'
-  icon: hass:lightbulb
 - id: '1636068645602'
   name: Game Time
   entities:
@@ -190,3 +166,135 @@
       friendly_name: Dining Table Lights
       supported_features: 33
       state: 'on'
+- id: '1641173845796'
+  name: Extra Movie Time
+  entities:
+    switch.bedroom_stair_light:
+      icon: mdi:stairs
+      friendly_name: Bedroom Stair Light
+      state: 'off'
+    switch.upstairs_hall_light:
+      icon: mdi:stairs
+      friendly_name: Upstairs Hall Light
+      state: 'off'
+    switch.entry_hallway_lights:
+      icon: mdi:stairs
+      friendly_name: Entry Hallway Lights
+      state: 'off'
+    switch.kitchen_landing_light:
+      icon: mdi:lightbulb
+      friendly_name: Kitchen Landing Light
+      state: 'off'
+    light.kitchen_island_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Island Lights
+      supported_features: 32
+      state: 'off'
+    light.living_room_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Lights
+      supported_features: 32
+      state: 'off'
+    light.tv_strip_color:
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      mode: normal
+      dynamics: none
+      friendly_name: TV Strip Color
+      supported_features: 40
+      state: 'off'
+    light.tv_strip_white:
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: TV Strip White
+      supported_features: 40
+      state: 'off'
+    light.dining_table_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Dining Table Lights
+      supported_features: 32
+      state: 'off'
+    switch.omega_dungeon_light:
+      friendly_name: Omega Dungeon Light
+      state: 'off'
+    switch.kitchen_light:
+      icon: mdi:food
+      friendly_name: Kitchen Light
+      state: 'off'
+  icon: mdi:popcorn
+- id: '1642907912772'
+  name: Landing Lights Down
+  entities:
+    light.downstairs_lightstrip:
+      effect_list:
+      - None
+      - Random
+      - Lightstrip Color Wipe
+      - Lightstrip Color Wipe - Plaid!
+      - Xmas Chase
+      - Xmas Chase 2
+      - Fireworks!
+      - Landing Lights Down
+      - Landing Lights Up
+      supported_color_modes:
+      - rgb
+      color_mode: rgb
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      effect: Landing Lights Down
+      icon: mdi:led-strip-variant
+      friendly_name: Downstairs Lightstrip
+      supported_features: 44
+      state: 'on'
+  icon: mdi:stairs-down
+- id: '1642908040006'
+  name: Landing Lights Up
+  entities:
+    light.downstairs_lightstrip:
+      effect_list:
+      - None
+      - Random
+      - Lightstrip Color Wipe
+      - Lightstrip Color Wipe - Plaid!
+      - Xmas Chase
+      - Xmas Chase 2
+      - Fireworks!
+      - Landing Lights Down
+      - Landing Lights Up
+      supported_color_modes:
+      - rgb
+      color_mode: rgb
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      effect: Landing Lights Up
+      icon: mdi:led-strip-variant
+      friendly_name: Downstairs Lightstrip
+      supported_features: 44
+      state: 'on'
+  icon: mdi:stairs-up

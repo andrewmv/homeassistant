@@ -457,3 +457,123 @@
     target:
       entity_id: switch.living_room_thermostat_display_timer
   mode: single
+- id: '1642290377228'
+  alias: Garage Door Timer
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: cover.garage_door
+    to: open
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_alpha_s_phone
+    data:
+      message: 'Garage Door has been open for 30 minutes '
+  - service: notify.mobile_app_omegaphone
+    data:
+      message: 'Garage Door has been open for 30 minutes '
+  - service: notify.mobile_app_goatphone
+    data:
+      message: 'Garage Door has been open for 30 minutes '
+  mode: single
+- id: '1642982933619'
+  alias: Landing Lights (Leaving)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.entryway
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.landing_lights_down
+  mode: single
+- id: '1642983026711'
+  alias: Landing Lights (Off)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.entryway
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.downstairs_lightstrip
+  mode: single
+- id: '1644096918061'
+  alias: Alpha Bathroom Double Taps with Auto Brightness
+  description: ''
+  use_blueprint:
+    path: kpine/ge_double_tap_auto_dimmer.yaml
+    input:
+      device: d4dae4112b5e0dbbb4936a905352de36
+      light: light.alpha_bathroom
+      off_brightness: 15
+- id: '1644193698096'
+  alias: Living Room TV Send WOL Packet
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 784adc2f73154cf712cb7c36cc8a8d12
+    domain: webostv
+    type: webostv.turn_on
+  condition: []
+  action:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      mac: b0:37:95:b6:32:a7
+  mode: single
+- id: '1644195103157'
+  alias: Power Off Roku Plug
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.living_room_tv
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.roku_plug
+  mode: single
+- id: '1644195302261'
+  alias: Turn On Roku Plug
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: c5cf1ed03c97583ef5562bf1c208dfd5
+    entity_id: remote.roku_ultra
+    domain: remote
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.roku_plug
+  mode: single
+- id: '1644195365273'
+  alias: Turn Off Roku Plug
+  description: ''
+  trigger:
+  - platform: device
+    device_id: c5cf1ed03c97583ef5562bf1c208dfd5
+    domain: media_player
+    entity_id: media_player.roku_ultra
+    type: turned_off
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.roku_plug
+  mode: single

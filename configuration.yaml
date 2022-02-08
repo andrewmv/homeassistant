@@ -168,6 +168,18 @@ webostv:
 # Create °C versions of our printer senors.
 # We're falsing setting them as °F values so HA doesn't try to auto-conver them
 sensor:
+  - platform: template
+    sensors:
+        powermon_total_heat_consumption:
+            friendly_name: "Total Heat Consumption"
+            value_template: >-
+                {{ states('sensor.master_bathroom_heater_plug_consumption') | 
+                float + states('sensor.alpha_den_heater_consumption') |
+                float + states('sensor.goat_summit_heater_consumption') |
+                float + states('sensor.wolf_dungeon_heater_consumption') |
+                float + states('sensor.living_room_heater_consumption') |
+                float }}
+            unit_of_measurement: 'kWh'
   - platform: pushbullet
     api_key: !secret pushbullet_api_key
   - platform: template
@@ -320,7 +332,9 @@ alexa:
         - person
 
 homekit:
-  - filter:
+  - name: "HASS Wolf Bridge"
+    port: 21063
+    filter:
       exclude_entities:
         - binary_sensor.home_theater_volume_button
         - number.home_theater_volume_delta
