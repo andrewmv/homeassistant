@@ -41,6 +41,7 @@ climate:
     api_key: !secret sensibo_api_key
   - platform: generic_thermostat
     name: Master Bathroom Thermostat
+    unique_id: master_bathroom_thermostat
     heater: switch.master_bathroom_heat
     target_sensor: sensor.master_bathroom_temperature
     min_temp: 50
@@ -275,8 +276,6 @@ sensor:
         config: 
           - mode: netserver
             shutdown_host: 'false'
-
-
     
 camera:
   - platform: mjpeg
@@ -287,122 +286,12 @@ camera:
 # Docs: https://www.home-assistant.io/integrations/alexa.smart_home/
 alexa:
   smart_home:
-    filter:
-      exclude_entities:
-        - script.ac_toggle
-        - script.fan_start_delay
-        - script.second_floor_lights_off
-        - script.set_heaters_for_bedtime
-        - script.set_heaters_for_morning
-        - climate.bedroom
-        - switch.living_room_xbox_plug
-        - switch.living_room_stereo_plug
-        - switch.home_theater_misc_plug
-        - switch.chromecast_plug
-        - switch.main_wap_plug
-        - switch.living_room_tv_plug
-        - binary_sensor.home_theater_volume_button
-        - number.home_theater_volume_delta
-        - sensor.alpha_den_thermostat_wifi
-        - media_player.everywhere
-        - binary_sensor.garage_door_myq_gateway
-        - binary_sensor.updater
-        - sensor.refridgerator_temperature
-        - switch.master_bathroom_heat
-      exclude_entity_globs:
-        - switch.*display_timer
-        - switch.*restart
-        - sensor.tanngrisnir*
-        - binary_sensory.tanngrisnir*
-        - climate.placeholder*
-        - sensor.placeholder*
-        - sensor.alpha_s_phone*
-        - sensor.christophers_iphone*
-        - sensor.goatphone*
-        - sensor.google_pixel*
-        - sensor.goat_summit_kiosk*
-        - sensor.motorola_one_zoom*
-        - sensor.omegaphone*
-        - sensor.oracle_phone*
-        - binary_sensor.alpha_s_phone*
-        - binary_sensor.christophers_iphone*
-        - binary_sensor.goatphone*
-        - binary_sensor.google_pixel*
-        - binary_sensor.goat_summit_kiosk*
-        - binary_sensor.motorola_one_zoom*
-        - binary_sensor.omegaphone*
-        - binary_sensor.oracle_phone*
-        - sensor.octoprint*
-        - binary_sensor.octoprint*
-        - "*.ev_plug*"
-        - "*.goat_desk_plug*"
-        - "*.work_phone_plug*"
-        - "*.goat_summit_tablet_plug*"
-      exclude_domains:
-        - automation
-        - device_tracker
-        - person
+    filter: !include excludes.yaml
 
 homekit:
   - name: "HASS Wolf Bridge"
     port: 21063
-    filter:
-      exclude_entities:
-        - binary_sensor.home_theater_volume_button
-        - number.home_theater_volume_delta
-        - switch.living_room_xbox_plug
-        - switch.living_room_stereo_plug
-        - switch.home_theater_misc_plug
-        - switch.chromecast_plug
-        - switch.main_wap_plug
-        - switch.living_room_tv_plug
-        - script.ac_toggle
-        - script.fan_start_delay
-        - script.second_floor_lights_off
-        - script.set_heaters_for_bedtime
-        - script.set_heaters_for_morning
-        - sensor.alpha_den_thermostat_wifi
-        - media_player.everywhere
-        - binary_sensor.garage_door_myq_gateway
-        - binary_sensor.updater
-        - sensor.refridgerator_temperature
-        - switch.master_bathroom_heat
-      exclude_entity_globs:
-        - climate.placeholder*
-        - sensor.placeholder*
-        - switch.*display_timer
-        - switch.*restart
-        - sensor.tanngrisnir*
-        - binary_sensory.tanngrisnir*
-        - climate.placeholder*
-        - sensor.placeholder*
-        - sensor.alpha_s_phone*
-        - sensor.christophers_iphone*
-        - sensor.goatphone*
-        - sensor.google_pixel*
-        - sensor.goat_summit_kiosk*
-        - sensor.motorola_one_zoom*
-        - sensor.omegaphone*
-        - sensor.oracle_phone*
-        - binary_sensor.alpha_s_phone*
-        - binary_sensor.christophers_iphone*
-        - binary_sensor.goatphone*
-        - binary_sensor.google_pixel*
-        - binary_sensor.goat_summit_kiosk*
-        - binary_sensor.motorola_one_zoom*
-        - binary_sensor.omegaphone*
-        - binary_sensor.oracle_phone*
-        - sensor.octoprint*
-        - binary_sensor.octoprint*
-        - "*.ev_plug*"
-        - "*.goat_desk_plug*"
-        - "*.work_phone_plug*"
-        - "*.goat_summit_tablet_plug*"
-        - sensor.dc_rail*
-      exclude_domains:
-        - automation
-        - device_tracker
-        - person
+    filter: !include excludes.yaml
 
 notify:
   - name: pushbullet_notifier
