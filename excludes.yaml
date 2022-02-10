@@ -1,0 +1,49 @@
+      exclude_entities:
+        - script.ac_toggle
+        - script.fan_start_delay
+        - script.second_floor_lights_off
+        - script.set_heaters_for_bedtime
+        - script.set_heaters_for_morning
+        - climate.bedroom
+        - switch.living_room_xbox_plug
+        - switch.living_room_stereo_plug
+        - switch.home_theater_misc_plug
+        - switch.chromecast_plug
+        - switch.main_wap_plug
+        - switch.living_room_tv_plug
+        - sensor.alpha_den_thermostat_wifi
+        - media_player.everywhere
+        - sensor.refridgerator_temperature
+        - switch.master_bathroom_heat
+        - light.home_theater
+      exclude_entity_globs:
+        - switch.*display_timer
+        - sensor.tanngrisnir*
+        - sensor.alpha_s_phone*
+        - sensor.christophers_iphone*
+        - sensor.goatphone*
+        - sensor.google_pixel*
+        - sensor.goat_summit_kiosk*
+        - sensor.motorola_one_zoom*
+        - sensor.omegaphone*
+        - sensor.oracle_phone*
+        - sensor.octoprint*
+        - "*_plug_*"
+        - "*placeholder*"
+        - "*lab_*"
+        - "*_wifi"
+        - "*_connectivity"
+        - "*restart*"
+        - "*_led"
+      exclude_domains:
+        - automation
+        - device_tracker
+        - person
+        - button
+        - binary_sensor
+        - number
+      include_entities:
+        - binary_sensor.downstairs_bathroom_motion_detector
+        - binary_sensor.south_bedroom_window
+        - switch.roku_plug
+
