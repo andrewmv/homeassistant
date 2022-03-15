@@ -286,12 +286,12 @@ camera:
 # Docs: https://www.home-assistant.io/integrations/alexa.smart_home/
 alexa:
   smart_home:
-    filter: !include excludes.yaml
+    filter: !include va_filters.yaml
 
 homekit:
   - name: "HASS Wolf Bridge"
     port: 21063
-    filter: !include excludes.yaml
+    filter: !include va_filters.yaml
 
 notify:
   - name: pushbullet_notifier
