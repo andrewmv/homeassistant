@@ -1,89 +1,88 @@
-include_entities:
-	- binary_sensor.south_bedroom_window
-	- camera.octoprint
-	- #climate.air_conditioner
-	- climate.alpha_den_thermostat
-	- climate.goat_summit_thermostat
-	- climate.living_room_thermostat
-	- climate.master_bathroom_thermostat
-	- climate.wolf_dungeon_thermostat
-	- cover.garage_door
-	- fan.bedroom_tower_fan
-	- fan.frigidaire_evaporator_fan
-	- fan.goat_wetter
-	- light.alpha_bathroom
-	- light.bar_lights
-	- light.dining_table_lights
-	- light.downstairs_lightstrip
-	- light.kitchen
-	- light.kitchen_island_lights
-	- light.living_room_lights
-	- light.lower_bar_lights
-	- light.rope_lights
-	- light.tv_strip_color
-	- light.tv_strip_white
-	- light.upper_bar_lights
-	- person.alpha
-	- person.growlph
-	- person.omega
-	- scene.dinner_time
-	- scene.extra_movie_time
-	- scene.game_time
-	- scene.landing_lights_down
-	- scene.landing_lights_up
-	- scene.movie_time
-	- scene.reading_time
-	- sensor.alpha_den_thermostat_humidity
-	- sensor.bedroom_humidity
-	- sensor.bedroom_temperature
-	- sensor.garage_humidity
-	- sensor.garage_temperature
-	- sensor.goat_summit_thermostat_humidity
-	- sensor.living_room_humidity
-	- sensor.master_bathroom_humidity
-	- sensor.south_bedroom_window_sensor
-	- sensor.south_bedroom_window_sensor_battery
-	- sensor.wolf_dungeon_thermostat_humidity
-	- switch.alpha_bedroom_light
-	- switch.alpha_humidifier
-	- switch.alpha_s_2nd_light
-	- switch.bedroom_stair_light
-	- switch.box_fan
-	- switch.downstairs_bathroom_lights
-	- switch.entry_hallway_lights
-	- switch.entryway_light
-	- switch.frigidaire_evaporation_switch
-	- switch.garage_light
-	- switch.kitchen_landing_light
-	- switch.kitchen_light
-	- switch.master_bathroom_lights
-	- switch.master_closet_light
-	- switch.master_toilet_light
-	- switch.omega_dungeon_light
-	- switch.omegas_den_floor_fan
-	- script.apple_tv
-	- script.1637482746551 # Chromecast
-	- script.disney_plus
-	- script.hallway_goodnight # Go The Fuck To Sleep
-	- script.leaving_home
-	- script.home_again
-	- script.hbo_max
-	- script.hulu
-	- script.level_1_diagnostic # Bounce the Echos
-	- script.level_2_diagnostic # Bounce the Echos and the WAPs
-	- script.level_3_diagnostic # Bounce the Echos, WAPs and the Modem
-	- script.master_bathroom_shower_heater	# Make the bathroom cozy for 30 minutes
-	- script.netflix
-	- script.nintendo_switch
-	- script.paramount_plus
-	- script.plex
-	- script.prime_video
-	- script.ps5
-	- script.rifftrax
-	- script.roku
-	- script.tape
-	- script.turntable
-	- script.work_is_over
-	- script.xbox
-	- script.xbox_muted
-	
+      include_entities:
+        - binary_sensor.south_bedroom_window
+        - camera.octoprint
+       # - climate.air_conditioner
+        - climate.alpha_den_thermostat
+        - climate.goat_summit_thermostat
+        - climate.living_room_thermostat
+        - climate.master_bathroom_thermostat
+        - climate.wolf_dungeon_thermostat
+        - cover.garage_door
+        - fan.bedroom_tower_fan
+        - fan.frigidaire_evaporator_fan
+        - fan.goat_wetter
+        - light.alpha_bathroom
+        - light.bar_lights
+        - light.dining_table_lights
+        - light.downstairs_lightstrip
+        - light.kitchen
+        - light.kitchen_island_lights
+        - light.living_room_lights
+        - light.lower_bar_lights
+        - light.rope_lights
+        - light.tv_strip_color
+        - light.tv_strip_white
+        - light.upper_bar_lights
+        - person.alpha
+        - person.growlph
+        - person.omega
+        - scene.dinner_time
+        - scene.extra_movie_time
+        - scene.game_time
+        - scene.landing_lights_down
+        - scene.landing_lights_up
+        - scene.movie_time
+        - scene.reading_time
+        - sensor.alpha_den_thermostat_humidity
+        - sensor.bedroom_humidity
+        - sensor.bedroom_temperature
+        - sensor.garage_humidity
+        - sensor.garage_temperature
+        - sensor.goat_summit_thermostat_humidity
+        - sensor.living_room_humidity
+        - sensor.master_bathroom_humidity
+        - sensor.south_bedroom_window_sensor
+        - sensor.south_bedroom_window_sensor_battery
+        - sensor.wolf_dungeon_thermostat_humidity
+        - switch.alpha_bedroom_light
+        - switch.alpha_humidifier
+        - switch.alpha_second_light
+        - switch.bedroom_stair_light
+        - switch.box_fan
+        - switch.downstairs_bathroom_lights
+        - switch.entry_hallway_lights
+        - switch.entryway_light
+        - switch.frigidaire_evaporation_switch
+        - switch.garage_light
+        - switch.kitchen_landing_light
+        - switch.kitchen_light
+        - switch.master_bathroom_lights
+        - switch.master_closet_light
+        - switch.master_toilet_light
+        - switch.omega_dungeon_light
+        - switch.omegas_den_floor_fan
+        - script.apple_tv
+        - script.1637482746551 # Chromecast
+        - script.disney_plus
+        - script.hallway_goodnight # Go The Fuck To Sleep
+        - script.leaving_home
+        - script.home_again
+        - script.hbo_max
+        - script.hulu
+        - script.level_1_diagnostic # Bounce the Echos
+        - script.level_2_diagnostic # Bounce the Echos and the WAPs
+        - script.level_3_diagnostic # Bounce the Echos, WAPs and the Modem
+        - script.master_bathroom_shower_heater # Make the bathroom cozy for 30 minutes
+        - script.netflix
+        - script.nintendo_switch
+        - script.paramount_plus
+        - script.plex
+        - script.prime_video
+        - script.ps5
+        - script.rifftrax
+        - script.roku
+        - script.tape
+        - script.turntable
+        - script.work_is_over
+        - script.xbox
+        - script.xbox_muted
