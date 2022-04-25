@@ -1,0 +1,35 @@
+  - platform: template
+    lights:
+      bar_lights:
+        friendly_name: "Bar Lights"
+        unique_id: template_bar_lights
+        icon_template: "mdi:glass-cocktail"
+        level_template: >-
+            {{ [ state_attr('light.upper_bar_lights', 'brightness')|int(0), state_attr('light.lower_bar_lights', 'brightness')|int(0)]|max }}
+        value_template: >-
+          {% if is_state('light.upper_bar_lights', 'on') or is_state('light.lower_bar_lights', 'on') %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        turn_on:
+          service: light.turn_on
+          target:
+            entity_id:
+              - light.upper_bar_lights
+              - light.lower_bar_lights
+        turn_off: 
+          service: light.turn_off
+          target:
+            entity_id:
+              - light.upper_bar_lights
+              - light.lower_bar_lights
+        set_level: 
+          service: light.turn_on
+          data: 
+            brightness: "{{ brightness }}"
+          target:
+            entity_id:
+              - light.upper_bar_lights
+              - light.lower_bar_lights
+

@@ -1,0 +1,77 @@
+  - platform: template
+    switches:
+      master_bathroom_heat:
+        icon_template: "mdi:fire"
+        value_template: "{{ is_state('binary_sensor.master_bathroom_heater_running', 'on') }}"
+        availability_template: "{{ is_state('binary_sensor.master_bathroom_heater_plug_status', 'on') }}"
+        turn_on:
+          service: button.press
+          target:
+            entity_id: button.master_bathroom_heater_toggle
+        turn_off:
+          service: button.press
+          target:
+            entity_id: button.master_bathroom_heater_toggle
+      ht_activity_tape_deck:
+        icon_template: "mdi:cassette"
+        value_template: "{{ is_state('input_text.home_theater_source', 'tapedeck') }}"
+        turn_on:
+          service: script.tape
+        turn_off:
+          service: script.tape_off
+      ht_activity_turntable:
+        icon_template: "mdi:record-player"
+        value_template: "{{ is_state('input_text.home_theater_source', 'turntable') }}"
+        turn_on:
+          service: script.turntable
+        turn_off:
+          service: script.tv_off
+      ht_activity_chromecast:
+        icon_template: "mdi:cast"
+        value_template: "{{ is_state('input_text.home_theater_source', 'chromecast') }}"
+        turn_on:
+          service: script.1637482746551
+        turn_off:
+          service: script.tv_off
+      ht_activity_switch:
+        icon_template: "mdi:nintendo-switch"
+        value_template: "{{ is_state('input_text.home_theater_source', 'switch') }}"
+        turn_on:
+          service: script.nintendo_switch
+        turn_off:
+          service: script.tv_off
+      ht_activity_roku:
+        icon_template: "mdi:set-top-box"
+        value_template: "{{ is_state('input_text.home_theater_source', 'roku') }}"
+        turn_on:
+          service: script.roku
+        turn_off:
+          service: script.tv_off
+      ht_activity_ps5:
+        icon_template: "mdi:sony-playstation"
+        value_template: "{{ is_state('input_text.home_theater_source', 'PS5 Game Console') }}"
+        turn_on:
+          service: script.ps5
+        turn_off:
+          service: script.tv_off
+      ht_activity_xbox:
+        icon_template: "mdi:microsoft-xbox"
+        value_template: "{{ is_state('input_text.home_theater_source', 'HDMI 3') }}"
+        turn_on:
+          service: script.xbox
+        turn_off:
+          service: script.tv_off
+      ht_activity_apple_tv:
+        icon_template: "mdi:apple"
+        value_template: "{{ is_state('input_text.home_theater_source', 'Apple OTT') }}"
+        turn_on:
+          service: script.apple_tv
+        turn_off:
+          service: script.tv_off
+      ht_activity_tv:
+        icon_template: "mdi:television"
+        value_template: "{{ is_state('media_player.living_room_tv', 'on') }}"
+        turn_on:
+          service: script.tv
+        turn_off:
+          service: script.tv_off
