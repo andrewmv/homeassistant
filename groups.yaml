@@ -3,12 +3,15 @@ kitchen:
     entities:
         - switch.kitchen_light
         - light.kitchen_island_lights
+        - switch.kitchen_landing_light
+
 living_room:
     name: Living Room
     entities:
         - light.living_room_lights
         - light.tv_strip_white
         - light.dining_table
+
 entryway:
     name: Entryway
     all: true
@@ -16,11 +19,20 @@ entryway:
         - switch.entryway_light
         - switch.entry_hallway_lights
         - switch.kitchen_landing_light
+        - light.downstairs_lightstrip
+
 upstairs:
     name: Upstairs
     entities:
         - switch.upstairs_hall_light
         - switch.bedroom_stair_light
+
+bar:
+  name: Bar
+  icon: "mdi:glass-cocktail"
+  entities:
+    - light.upper_bar_lights
+    - light.lower_bar_lights
         
 everyone:
     name: Everyone

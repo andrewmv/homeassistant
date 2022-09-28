@@ -22,23 +22,23 @@ recorder:
   purge_keep_days: 30
 
 # Docs: https://www.home-assistant.io/integrations/nest/
-nest:
-  client_id: !secret nest_client_id
-  client_secret: !secret nest_client_secret
-  # "Project ID" in the Device Access Console
-  project_id: !secret nest_project_id
-  # Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
-  subscriber_id: !secret nest_subscriber_id
+# nest:
+#   client_id: !secret nest_client_id
+#   client_secret: !secret nest_client_secret
+#   # "Project ID" in the Device Access Console
+#   project_id: !secret nest_project_id
+#   # Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
+#   subscriber_id: !secret nest_subscriber_id
 
-octoprint:
-    host: 'jetson.local'
-    api_key: !secret octoprint_api_key
-    bed: true
-    number_of_tools: 1
+# octoprint:
+#     host: 'jetson.local'
+#     api_key: !secret octoprint_api_key
+#     bed: true
+#     number_of_tools: 1
     
 climate:
-  - platform: sensibo
-    api_key: !secret sensibo_api_key
+  # - platform: sensibo
+  #   api_key: !secret sensibo_api_key
   - platform: generic_thermostat
     name: Master Bathroom Thermostat
     unique_id: master_bathroom_thermostat
@@ -52,119 +52,119 @@ climate:
       seconds: 60
     initial_hvac_mode: heat
     
-rest_command:
-  octoprint_preheat_bed_pla:
-    url: "https://octoprint.ibex.social/api/printer/bed"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "target", "target": 65 }'
-  octoprint_preheat_bed_abs:
-    url: "https://octoprint.ibex.social/api/printer/bed"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "target", "target": 85 }'
-  octoprint_cancel_preheat:
-    url: "https://octoprint.ibex.social/api/printer/bed"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "target", "target": 0 }'
-  octoprint_connect:
-    url: "https://octoprint.ibex.social/api/connection"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "connect", "printerProfile": "_default" }'
-  octoprint_start:
-    url: "https://octoprint.ibex.social/api/job"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "start" }'
-  octoprint_heat_hotend:
-    url: "https://octoprint.ibex.social/api/printer/tool"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "target", "targets": {"tool0": 210} }'
-  octoprint_cancel_hotend:
-    url: "https://octoprint.ibex.social/api/printer/tool"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "target", "targets": {"tool0": 0} }'
-  octoprint_turnon_psu:
-    url: "https://octoprint.ibex.social/api/plugin/psucontrol"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command":"turnPSUOn"}'
-  octoprint_turnoff_psu:
-    url: "https://octoprint.ibex.social/api/plugin/psucontrol"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command":"turnPSUOff"}'
-  octoprint_jog_xp:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "x": 10 }'
-  octoprint_jog_xn:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "x": -10 }'
-  octoprint_jog_yp:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "y": 10 }'
-  octoprint_jog_yn:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "y": -10 }'
-  octoprint_jog_zu:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "z": 10 }'
-  octoprint_jog_zd:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "job", "z": -10 }'
-  octoprint_home:
-    url: "https://octoprint.ibex.social/api/printer/printhead"
-    method: post
-    content_type: "application/json"
-    headers:
-        X-Api-Key: !secret octoprint_api_key
-    payload: '{"command": "home", "axes": ["x","y","z"] }'
+# rest_command:
+#   octoprint_preheat_bed_pla:
+#     url: "https://octoprint.ibex.social/api/printer/bed"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "target", "target": 65 }'
+#   octoprint_preheat_bed_abs:
+#     url: "https://octoprint.ibex.social/api/printer/bed"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "target", "target": 85 }'
+#   octoprint_cancel_preheat:
+#     url: "https://octoprint.ibex.social/api/printer/bed"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "target", "target": 0 }'
+#   octoprint_connect:
+#     url: "https://octoprint.ibex.social/api/connection"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "connect", "printerProfile": "_default" }'
+#   octoprint_start:
+#     url: "https://octoprint.ibex.social/api/job"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "start" }'
+#   octoprint_heat_hotend:
+#     url: "https://octoprint.ibex.social/api/printer/tool"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "target", "targets": {"tool0": 210} }'
+#   octoprint_cancel_hotend:
+#     url: "https://octoprint.ibex.social/api/printer/tool"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "target", "targets": {"tool0": 0} }'
+#   octoprint_turnon_psu:
+#     url: "https://octoprint.ibex.social/api/plugin/psucontrol"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command":"turnPSUOn"}'
+#   octoprint_turnoff_psu:
+#     url: "https://octoprint.ibex.social/api/plugin/psucontrol"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command":"turnPSUOff"}'
+#   octoprint_jog_xp:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "x": 10 }'
+#   octoprint_jog_xn:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "x": -10 }'
+#   octoprint_jog_yp:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "y": 10 }'
+#   octoprint_jog_yn:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "y": -10 }'
+#   octoprint_jog_zu:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "z": 10 }'
+#   octoprint_jog_zd:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "job", "z": -10 }'
+#   octoprint_home:
+#     url: "https://octoprint.ibex.social/api/printer/printhead"
+#     method: post
+#     content_type: "application/json"
+#     headers:
+#         X-Api-Key: !secret octoprint_api_key
+#     payload: '{"command": "home", "axes": ["x","y","z"] }'
 
 wake_on_lan:
 
@@ -177,9 +177,15 @@ webostv:
       mac: B0-37-95-B6-32-A7
       broadcast_address: 192.168.1.255
     
-# Create °C versions of our printer senors.
-# We're falsing setting them as °F values so HA doesn't try to auto-conver them
 sensor:
+  - platform: template
+    sensors:
+      goat_summit_average_temperature:
+        friendly_name: "Goat Summit Average Temperature"
+        value_template: >-
+          {{ (states('sensor.goat_summit_thermostat_temperature') | float(0) + 
+             states('sensor.goat_summit_ir_blaster_temperature') | float(0)) / 2.0 }}
+        unit_of_measurement: '°F'
   - platform: template
     sensors:
         powermon_total_heat_consumption:
@@ -194,88 +200,90 @@ sensor:
             unit_of_measurement: 'kWh'
   - platform: pushbullet
     api_key: !secret pushbullet_api_key
-  - platform: template
-    sensors:
-      octoprint_actual_tool0_temp_c:
-        unit_of_measurement: '°F'
-        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_tool0_temp") | float ) -32) *5/9) }}'
-      octoprint_actual_bed_temp_c:
-        unit_of_measurement: '°F'
-        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_bed_temp") | float ) -32) *5/9) }}'
-      octoprint_target_tool0_temp_c:
-        unit_of_measurement: '°F'
-        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_tool0_temp") | float ) -32) *5/9) }}'
-      octoprint_target_bed_temp_c:
-        unit_of_measurement: '°F'
-        value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_bed_temp") | float ) -32) *5/9) }}'
-      octoprint_time_elapsed_pretty:
-        value_template: >-
-          {%- set uptime  = states.sensor.octoprint_time_elapsed.state | round -%}
-          {%- set sep     = ', ' -%}
-          {%- set TIME_MAP = {
-              'week': (uptime / 604800) % 10080,
-               'day': (uptime / 86400) % 7,
-              'hour': (uptime / 3600) % 24,
-            'minute': (uptime / 60) % 60
-          }
-          -%}
+# Create °C versions of our printer senors.
+# We're falsing setting them as °F values so HA doesn't try to auto-conver them
+  # - platform: template
+  #   sensors:
+  #     octoprint_actual_tool0_temp_c:
+  #       unit_of_measurement: '°F'
+  #       value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_tool0_temp") | float ) -32) *5/9) }}'
+  #     octoprint_actual_bed_temp_c:
+  #       unit_of_measurement: '°F'
+  #       value_template: '{{ "%.2f"|format((( states("sensor.octoprint_actual_bed_temp") | float ) -32) *5/9) }}'
+  #     octoprint_target_tool0_temp_c:
+  #       unit_of_measurement: '°F'
+  #       value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_tool0_temp") | float ) -32) *5/9) }}'
+  #     octoprint_target_bed_temp_c:
+  #       unit_of_measurement: '°F'
+  #       value_template: '{{ "%.2f"|format((( states("sensor.octoprint_target_bed_temp") | float ) -32) *5/9) }}'
+  #     octoprint_time_elapsed_pretty:
+  #       value_template: >-
+  #         {%- set uptime  = states.sensor.octoprint_time_elapsed.state | round -%}
+  #         {%- set sep     = ', ' -%}
+  #         {%- set TIME_MAP = {
+  #             'week': (uptime / 604800) % 10080,
+  #              'day': (uptime / 86400) % 7,
+  #             'hour': (uptime / 3600) % 24,
+  #           'minute': (uptime / 60) % 60
+  #         }
+  #         -%}
 
-          {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
-            {%- if not loop.first -%}
-              {{ sep }}
-            {%- endif -%}
+  #         {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
+  #           {%- if not loop.first -%}
+  #             {{ sep }}
+  #           {%- endif -%}
               
-            {{ (duration | string).split('.')[0] }} {{ unit }}
+  #           {{ (duration | string).split('.')[0] }} {{ unit }}
 
-            {%- if duration >= 2 -%}
-              s
-            {%- endif -%}
-          {%- endfor -%}
+  #           {%- if duration >= 2 -%}
+  #             s
+  #           {%- endif -%}
+  #         {%- endfor -%}
 
-          {%- if uptime < 1 -%}
-            just now
-          {%- endif -%}
-      octoprint_time_remaining_pretty:
-        value_template: >-
-          {%- set uptime  = states.sensor.octoprint_time_remaining.state | round -%}
-          {%- set sep     = ', ' -%}
-          {%- set TIME_MAP = {
-              'week': (uptime / 604800) % 10080,
-               'day': (uptime / 86400) % 7,
-              'hour': (uptime / 3600) % 24,
-            'minute': (uptime / 60) % 60
-          }
-          -%}
+  #         {%- if uptime < 1 -%}
+  #           just now
+  #         {%- endif -%}
+  #     octoprint_time_remaining_pretty:
+  #       value_template: >-
+  #         {%- set uptime  = states.sensor.octoprint_time_remaining.state | round -%}
+  #         {%- set sep     = ', ' -%}
+  #         {%- set TIME_MAP = {
+  #             'week': (uptime / 604800) % 10080,
+  #              'day': (uptime / 86400) % 7,
+  #             'hour': (uptime / 3600) % 24,
+  #           'minute': (uptime / 60) % 60
+  #         }
+  #         -%}
 
-          {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
-            {%- if not loop.first -%}
-              {{ sep }}
-            {%- endif -%}
+  #         {%- for unit, duration in TIME_MAP.items() if duration >= 1 -%}
+  #           {%- if not loop.first -%}
+  #             {{ sep }}
+  #           {%- endif -%}
               
-            {{ (duration | string).split('.')[0] }} {{ unit }}
+  #           {{ (duration | string).split('.')[0] }} {{ unit }}
 
-            {%- if duration >= 2 -%}
-              s
-            {%- endif -%}
-          {%- endfor -%}
+  #           {%- if duration >= 2 -%}
+  #             s
+  #           {%- endif -%}
+  #         {%- endfor -%}
 
-          {%- if uptime < 1 -%}
-            just now
-          {%- endif -%}
-  - platform: nut
-    users:
-      - username: nutty
-        password: !secret nutpw
-        instcmds:
-          - all
-        actions: []
-    devices:
-      - name: hometheaterups
-        driver: usbhid-ups
-        port: auto
-        config: 
-          - mode: netserver
-            shutdown_host: 'false'
+  #         {%- if uptime < 1 -%}
+  #           just now
+  #         {%- endif -%}
+  # - platform: nut
+  #   users:
+  #     - username: nutty
+  #       password: !secret nutpw
+  #       instcmds:
+  #         - all
+  #       actions: []
+  #   devices:
+  #     - name: hometheaterups
+  #       driver: usbhid-ups
+  #       port: auto
+  #       config: 
+  #         - mode: netserver
+  #           shutdown_host: 'false'
     
 camera:
   - platform: mjpeg

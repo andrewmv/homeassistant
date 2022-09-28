@@ -28,16 +28,30 @@
           service: script.tv_off
       ht_activity_chromecast:
         icon_template: "mdi:cast"
-        value_template: "{{ is_state('input_text.home_theater_source', 'chromecast') }}"
+        value_template: "{{ is_state('input_text.home_theater_source', 'chromecast') and is_state('media_player.living_room_tv', 'on') }}"
         turn_on:
           service: script.1637482746551
         turn_off:
           service: script.tv_off
+      ht_activity_chromecast_audio:
+        icon_template: "mdi:cast"
+        value_template: "{{ is_state('media_player.receiver', 'on') and is_state('media_player.living_room_tv', 'off') and is_state_attr('media_player.receiver', 'source', 'Bluray') }}"
+        turn_on:
+          service: script.chromecast_audio
+        turn_off:
+          service: script.tv_off 
       ht_activity_switch:
         icon_template: "mdi:nintendo-switch"
         value_template: "{{ is_state('input_text.home_theater_source', 'switch') }}"
         turn_on:
           service: script.nintendo_switch
+        turn_off:
+          service: script.tv_off
+      ht_activity_pc:
+        icon_template: "mdi:laptop"
+        value_template: "{{ is_state('input_text.home_theater_source', 'pc') }}"
+        turn_on:
+          service: script.pc
         turn_off:
           service: script.tv_off
       ht_activity_roku:
@@ -75,3 +89,13 @@
           service: script.tv
         turn_off:
           service: script.tv_off
+      living_room_ac:
+        icon_template: "mdi:snowflake"
+        turn_on:
+          service: button.press
+          target:
+            entity_id: button.living_room_ac_on
+        turn_off:
+          service: button.press
+          target:
+            entity_id: button.living_room_ac_off

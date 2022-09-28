@@ -63,6 +63,7 @@
         - switch.omegas_den_floor_fan
         - script.apple_tv
         - script.1637482746551 # Chromecast
+        - script.chromecast_audio 
         - script.disney_plus
         - script.hallway_goodnight # Go The Fuck To Sleep
         - script.leaving_home
