@@ -14,77 +14,185 @@
             entity_id: button.master_bathroom_heater_toggle
       ht_activity_tape_deck:
         icon_template: "mdi:cassette"
-        value_template: "{{ is_state('input_text.home_theater_source', 'tapedeck') }}"
+        value_template: >
+          {% if 
+            is_state('switch.tape_deck', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            is_state_attr('media_player.receiver', 'source', 'Tape')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.tape
         turn_off:
           service: script.tape_off
       ht_activity_turntable:
         icon_template: "mdi:record-player"
-        value_template: "{{ is_state('input_text.home_theater_source', 'turntable') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.receiver', 'on') and 
+            is_state_attr('media_player.receiver', 'source', 'Phono')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.turntable
         turn_off:
           service: script.tv_off
       ht_activity_chromecast:
         icon_template: "mdi:cast"
-        value_template: "{{ is_state('input_text.home_theater_source', 'chromecast') and is_state('media_player.living_room_tv', 'on') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ['AV Receiver', 'HDMI 2'] and
+            is_state_attr('media_player.receiver', 'source', 'Bluray')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}
         turn_on:
           service: script.1637482746551
         turn_off:
           service: script.tv_off
       ht_activity_chromecast_audio:
         icon_template: "mdi:cast"
-        value_template: "{{ is_state('media_player.receiver', 'on') and is_state('media_player.living_room_tv', 'off') and is_state_attr('media_player.receiver', 'source', 'Bluray') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'off') and
+            is_state('media_player.receiver', 'on') and 
+            is_state_attr('media_player.receiver', 'source', 'Bluray')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.chromecast_audio
         turn_off:
           service: script.tv_off 
       ht_activity_switch:
         icon_template: "mdi:nintendo-switch"
-        value_template: "{{ is_state('input_text.home_theater_source', 'switch') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ['AV Receiver', 'HDMI 2'] and
+            is_state_attr('media_player.receiver', 'source', 'Video 3')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.nintendo_switch
         turn_off:
           service: script.tv_off
       ht_activity_pc:
         icon_template: "mdi:laptop"
-        value_template: "{{ is_state('input_text.home_theater_source', 'pc') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ['PC', 'HDMI 3'] and
+            is_state_attr('media_player.receiver', 'source', 'TV')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}
         turn_on:
           service: script.pc
         turn_off:
           service: script.tv_off
       ht_activity_roku:
         icon_template: "mdi:set-top-box"
-        value_template: "{{ is_state('input_text.home_theater_source', 'roku') }}"
+        value_template: >
+          {% if 
+            is_state('switch.roku_plug', 'on') and
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ['AV Receiver', 'HDMI 2'] and
+            is_state_attr('media_player.receiver', 'source', 'Video 2')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.roku
         turn_off:
           service: script.tv_off
       ht_activity_ps5:
         icon_template: "mdi:sony-playstation"
-        value_template: "{{ is_state('input_text.home_theater_source', 'PS5 Game Console') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ["XBOX Game Console", "PS5", "Playstation 5 Game Console", "Apple OTT", "Steve"] and
+            is_state_attr('media_player.receiver', 'source', 'TV') and
+            is_state('select.hdmi_switch_input', 'HDMI 3')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.ps5
         turn_off:
           service: script.tv_off
       ht_activity_xbox:
         icon_template: "mdi:microsoft-xbox"
-        value_template: "{{ is_state('input_text.home_theater_source', 'HDMI 3') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ["XBOX Game Console", "PS5", "Playstation 5 Game Console", "Apple OTT", "Steve"] and
+            is_state_attr('media_player.receiver', 'source', 'TV') and
+            is_state('select.hdmi_switch_input', 'HDMI 2')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.xbox
         turn_off:
           service: script.tv_off
       ht_activity_apple_tv:
         icon_template: "mdi:apple"
-        value_template: "{{ is_state('input_text.home_theater_source', 'Apple OTT') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            is_state('media_player.receiver', 'on') and 
+            state_attr('media_player.living_room_tv', 'source') is in ["XBOX Game Console", "PS5", "Playstation 5 Game Console", "Apple OTT", "Steve"] and
+            is_state_attr('media_player.receiver', 'source', 'TV') and
+            is_state('select.hdmi_switch_input', 'HDMI 1')
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.apple_tv
         turn_off:
           service: script.tv_off
       ht_activity_tv:
         icon_template: "mdi:television"
-        value_template: "{{ is_state('media_player.living_room_tv', 'on') }}"
+        value_template: >
+          {% if 
+            is_state('media_player.living_room_tv', 'on') and
+            state_attr('media_player.living_room_tv', 'source') is not in ["XBOX Game Console", "PS5", "Playstation 5 Game Console", "Apple OTT", "Steve", "AV Receiver", "PC"] 
+          %}
+          {{ true }}
+          {% else %}
+          {{ false }}
+          {% endif %}        
         turn_on:
           service: script.tv
         turn_off:
