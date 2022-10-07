@@ -18,7 +18,7 @@
           {% if 
             is_state('switch.tape_deck', 'on') and
             is_state('media_player.receiver', 'on') and 
-            is_state_attr('media_player.receiver', 'source', 'Tape')
+            is_state_attr('media_player.receiver', 'source', 'cd_tv/cd')
           %}
           {{ true }}
           {% else %}
