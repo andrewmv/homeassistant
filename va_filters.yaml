@@ -1,10 +1,12 @@
       include_entities:
         - binary_sensor.south_bedroom_window
         - camera.octoprint
-       # - climate.air_conditioner
+        - climate.goat_cooler
         - climate.alpha_den_thermostat
-        - climate.goat_summit_thermostat
+        - climate.alpha_den_ac
+    #    - climate.goat_summit_thermostat
         - climate.living_room_thermostat
+        - switch.living_room_ac
         - climate.master_bathroom_thermostat
         - climate.wolf_dungeon_thermostat
         - cover.garage_door
@@ -44,6 +46,18 @@
         - sensor.south_bedroom_window_sensor
         - sensor.south_bedroom_window_sensor_battery
         - sensor.wolf_dungeon_thermostat_humidity
+        - sensor.livingroom_air_pm_1um
+        - sensor.livingroom_air_pm_2um
+        - sensor.livingroom_air_pm_10um
+        - sensor.wolfdungeon_air_pm_1um
+        - sensor.wolfdungeon_air_pm_2um
+        - sensor.wolfdungeon_air_pm_10um
+        - sensor.goatsummit_air_pm_1um
+        - sensor.goatsummit_air_pm_2um
+        - sensor.goatsummit_air_pm_10um
+        - sensor.alphaden_air_pm_1um
+        - sensor.alphaden_air_pm_2um
+        - sensor.alphaden_air_pm_10um
         - switch.alpha_bedroom_light
         - switch.alpha_humidifier
         - switch.alpha_second_light
@@ -61,9 +75,9 @@
         - switch.master_toilet_light
         - switch.omega_dungeon_light
         - switch.omegas_den_floor_fan
+        - switch.vr_base_stations
         - script.apple_tv
         - script.1637482746551 # Chromecast
-        - script.chromecast_audio 
         - script.disney_plus
         - script.hallway_goodnight # Go The Fuck To Sleep
         - script.leaving_home
@@ -76,6 +90,7 @@
         - script.master_bathroom_shower_heater # Make the bathroom cozy for 30 minutes
         - script.netflix
         - script.nintendo_switch
+        - script.pc
         - script.paramount_plus
         - script.plex
         - script.prime_video
@@ -87,3 +102,8 @@
         - script.work_is_over
         - script.xbox
         - script.xbox_muted
+        - script.reboot_chromecast
+        - script.reboot_apple_tv
+        - media_player.receiver
+        - media_player.living_room_tv
+        - input_boolean.omega_s_meds
