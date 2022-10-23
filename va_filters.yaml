@@ -76,6 +76,7 @@
         - switch.omega_dungeon_light
         - switch.omegas_den_floor_fan
         - switch.vr_base_stations
+        - switch.alpha_s_radiator_plug
         - script.apple_tv
         - script.1637482746551 # Chromecast
         - script.disney_plus
@@ -90,7 +91,8 @@
         - script.master_bathroom_shower_heater # Make the bathroom cozy for 30 minutes
         - script.netflix
         - script.nintendo_switch
-        - script.pc
+        #- script.pc  # Replacing this with switch to allow turn_off command
+        - switch.pc
         - script.paramount_plus
         - script.plex
         - script.prime_video
