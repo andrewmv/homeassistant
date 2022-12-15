@@ -128,7 +128,7 @@
         turn_on:
           service: script.pc
         turn_off:
-          service: script.tv_off
+          service: script.turn_off_pc
       ht_activity_roku:
         icon_template: "mdi:set-top-box"
         value_template: >
